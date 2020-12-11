@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace HawaiiWeatherApp
 {
@@ -15,6 +16,14 @@ namespace HawaiiWeatherApp
         public Form1()
         {
             InitializeComponent();
+            getWeatherData();
+        }
+
+        private void getWeatherData()
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.Load("xmlFiles/oahu.xml");
+            label1.Text = xml.GetElementsByTagName("temp_c")[0].InnerText;
         }
     }
 }
