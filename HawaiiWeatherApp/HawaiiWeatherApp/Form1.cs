@@ -28,16 +28,36 @@ namespace HawaiiWeatherApp
         public Form1()
         {
             InitializeComponent();
+            fillLists();
+            updateData();
         }
 
+        private void fillLists()
+        {
+            filenames.AddRange
+            (
+                new List<string>
+                {
+                    "PHHI.xml", "PHSF.xml", "PHNL.xml", "PHTO.xml", "PHOG.xml", "PHKO.xml", "PHNG.xml", "PHBK.xml", "PHJH.xml", "PHNY.xml", "PHLI.xml", "PHJR.xml"
+                }
+            );
+
+            locations.AddRange
+            (
+                new List<string>
+                {
+                    "Oahu", "Bradshaw Army Air Field", "Daniel K Inouye International Airport", "Hilo", "Kahului", "Kailua / Kona", "Kaneohe", "Kekaha", "Lahaina", "Lanai City", "Lihue", "Oahu"
+                }
+            );
+        }
 
         private void getWeatherData()
         {
 
-            if (!Directory.EnumerateFileSystemEntries(Application.StartupPath.ToString() + "\\xmlFiles\\").Any())
-            {
-                updateData();
-            }
+            //if (Directory.GetFileSystemEntries(Application.StartupPath.ToString() + "\\xmlFiles\\").Length == 0)
+            //{
+            //    updateData();
+            //}
 
             XmlDocument xml = new XmlDocument();
             string selected = "";           
@@ -61,21 +81,7 @@ namespace HawaiiWeatherApp
         private void updateData()
         {
             clearData();
-            filenames.AddRange
-            (
-                new List<string>
-                {
-                    "PHHI.xml", "PHSF.xml", "PHNL.xml", "PHTO.xml", "PHOG.xml", "PHKO.xml", "PHNG.xml", "PHBK.xml", "PHJH.xml", "PHNY.xml", "PHLI.xml", "PHJR.xml"
-                }
-            );
-
-            locations.AddRange
-            (
-                new List<string>
-                {
-                    "Oahu", "Bradshaw Army Air Field", "Daniel K Inouye International Airport", "Hilo", "Kahului", "Kailua / Kona", "Kaneohe", "Kekaha", "Lahaina", "Lanai City", "Lihue", "Oahu"
-                }
-            );
+            
 
             for (int i = 0; i < filenames.Count; i++)
             {
@@ -142,6 +148,7 @@ namespace HawaiiWeatherApp
         {
             string[] headers = new string[]
             {
+                "Location",
                 "Observation Time",
                 "Weather",
                 "Temperature (°C)",
@@ -154,10 +161,55 @@ namespace HawaiiWeatherApp
             }
 
 
-            
+            XmlDocument xml = new XmlDocument();
 
+            List<string> obs_time = new List<string>();
+            List<string> weather = new List<string>();
+            List<double> temp = new List<double>();
+            List<int> humidity = new List<int>();
+            List<double> wind = new List<double>();
+            foreach (weatherLinks link in links)
+            {
+                xml.Load("xmlFiles\\" + link.fileName);
+                string linkObsTime_tmp = xml.GetElementsByTagName("observation_time")[0].InnerText;
+                string linkObsTime = linkObsTime_tmp.Substring(linkObsTime_tmp.Length - 25, 25);
+
+                string linkWeather = xml.GetElementsByTagName("weather")[0].InnerText;
+                double linkTemp = double.Parse(xml.GetElementsByTagName("temp_c")[0].InnerText + "°C");
+                int linkHumidity = int.Parse(xml.GetElementsByTagName("relative_humidity")[0].InnerText);
+                double linkWind = double.Parse(xml.GetElementsByTagName("wind_mph")[0].InnerText);
+
+                obs_time.Add(linkObsTime);
+                weather.Add(linkWeather);
+                temp.Add(linkTemp);
+                humidity.Add(linkHumidity);
+                wind.Add(linkWind);
+            }
+
+            xlSheet.get_Range(
+            GetCell(2, 1),
+            GetCell(links.Count, 1)).Value2 = locations;
 
         }
+
+        private string GetCell(int x, int y)
+        {
+            string ExcelCoordinate = "";
+            int dividend = y;
+            int modulo;
+
+            while (dividend > 0)
+            {
+                modulo = (dividend - 1) % 26;
+                ExcelCoordinate = Convert.ToChar(65 + modulo).ToString() + ExcelCoordinate;
+                dividend = (int)((dividend - modulo) / 26);
+            }
+            ExcelCoordinate += x.ToString();
+
+            return ExcelCoordinate;
+        }
+
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
