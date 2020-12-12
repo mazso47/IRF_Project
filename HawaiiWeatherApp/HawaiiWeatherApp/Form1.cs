@@ -21,17 +21,24 @@ namespace HawaiiWeatherApp
         List<string> locations = new List<string>();
         List<weatherLinks> links = new List<weatherLinks>();
 
-      
+        Excel.Application xlApp; // A Microsoft Excel alkalmazás
+        Excel.Workbook xlWB; // A létrehozott munkafüzet
+        Excel.Worksheet xlSheet; // Munkalap a munkafüzeten belül
 
         public Form1()
         {
             InitializeComponent();
-            updateData();
         }
 
 
         private void getWeatherData()
         {
+
+            if (!Directory.EnumerateFileSystemEntries(Application.StartupPath.ToString() + "\\xmlFiles\\").Any())
+            {
+                updateData();
+            }
+
             XmlDocument xml = new XmlDocument();
             string selected = "";           
             for (int i = 0; i < links.Count; i++)
@@ -41,7 +48,7 @@ namespace HawaiiWeatherApp
                     selected = links[i].fileName;
                 }
             }
-            xml.Load("xmlFiles/" + selected);
+            xml.Load("xmlFiles\\" + selected);
             label6.Text = xml.GetElementsByTagName("observation_time")[0].InnerText;
             label7.Text = xml.GetElementsByTagName("weather")[0].InnerText;
             label8.Text = xml.GetElementsByTagName("temp_c")[0].InnerText + "°C";
@@ -98,6 +105,60 @@ namespace HawaiiWeatherApp
             }
         }
 
+        private void CreateExcel()
+        {
+            try
+            {
+                // Excel elindítása és az applikáció objektum betöltése
+                xlApp = new Excel.Application();
+
+                // Új munkafüzet
+                xlWB = xlApp.Workbooks.Add(Missing.Value);
+
+                // Új munkalap
+                xlSheet = xlWB.ActiveSheet;
+
+                // Tábla létrehozása
+                CreateTable(); // Ennek megírása a következő feladatrészben következik
+
+                // Control átadása a felhasználónak
+                xlApp.Visible = true;
+                xlApp.UserControl = true;
+            }
+            catch (Exception ex) // Hibakezelés a beépített hibaüzenettel
+            {
+                string errMsg = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
+                MessageBox.Show(errMsg, "Error");
+
+                // Hiba esetén az Excel applikáció bezárása automatikusan
+                xlWB.Close(false, Type.Missing, Type.Missing);
+                xlApp.Quit();
+                xlWB = null;
+                xlApp = null;
+            }
+        }
+
+        private void CreateTable()
+        {
+            string[] headers = new string[]
+            {
+                "Observation Time",
+                "Weather",
+                "Temperature (°C)",
+                "Humidity",
+                "Wind (MpH)"
+            };
+            for (int i = 0; i < headers.Length; i++)
+            {
+                xlSheet.Cells[1, i+1] = headers[i];
+            }
+
+
+            
+
+
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             updateData();
@@ -107,6 +168,11 @@ namespace HawaiiWeatherApp
         private void button2_Click(object sender, EventArgs e)
         {
             getWeatherData();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            CreateExcel();
         }
     }
 }
