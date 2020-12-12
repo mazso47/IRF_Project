@@ -168,17 +168,42 @@ namespace HawaiiWeatherApp
             {
                 xml.Load(Application.StartupPath.ToString() + "\\xmlFiles\\" + link.fileName);
                 values[cnt, 0] = xml.GetElementsByTagName("location")[0].InnerText;
-                values[cnt, 1] = xml.GetElementsByTagName("observation_time")[0].InnerText;
+
+                string obsTmp = xml.GetElementsByTagName("observation_time")[0].InnerText;
+                values[cnt, 1] = obsTmp.Substring(obsTmp.Length - 25, 25);
+
                 values[cnt, 2] = xml.GetElementsByTagName("weather")[0].InnerText;
-                values[cnt, 3] = xml.GetElementsByTagName("temp_c")[0].InnerText + "°C";
+                values[cnt, 3] = xml.GetElementsByTagName("temp_c")[0].InnerText;
                 values[cnt, 4] = xml.GetElementsByTagName("wind_mph")[0].InnerText;
                 cnt++;
             }
 
             xlSheet.get_Range(
-          GetCell(2, 1),
-           GetCell(1 + values.GetLength(0), values.GetLength(1))).Value2 = values;
+            GetCell(2, 1),
+            GetCell(1 + values.GetLength(0), values.GetLength(1))).Value2 = values;
 
+            Excel.Range headerRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1, headers.Length));
+            headerRange.Font.Bold = true;
+            headerRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+            headerRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            headerRange.EntireColumn.AutoFit();
+            headerRange.RowHeight = 40;
+            headerRange.Interior.Color = Color.LightPink;
+            headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            Excel.Range fullRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1 + values.GetLength(0), headers.Length));
+            fullRange.RowHeight = 20;
+            fullRange.BorderAround2(Excel.XlLineStyle.xlContinuous);
+            fullRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+
+            Excel.Range rightRange = xlSheet.get_Range(GetCell(1, 2), GetCell(1 + values.GetLength(0), headers.Length));
+            rightRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+            Excel.Range leftRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1 + values.GetLength(0), 1));
+            leftRange.Font.Bold = true;
+
+            Excel.Range tempRange = xlSheet.get_Range(GetCell(1, 4), GetCell(1 + values.GetLength(0), 4));
+            tempRange.Font.Bold = true;
 
         }
 
