@@ -72,7 +72,6 @@ namespace HawaiiWeatherApp
             label6.Text = xml.GetElementsByTagName("observation_time")[0].InnerText;
             label7.Text = xml.GetElementsByTagName("weather")[0].InnerText;
             label8.Text = xml.GetElementsByTagName("temp_c")[0].InnerText + "°C";
-            label9.Text = xml.GetElementsByTagName("relative_humidity")[0].InnerText;
             label10.Text = xml.GetElementsByTagName("wind_mph")[0].InnerText;
             //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
         }
@@ -152,7 +151,6 @@ namespace HawaiiWeatherApp
                 "Observation Time",
                 "Weather",
                 "Temperature (°C)",
-                "Humidity",
                 "Wind (MpH)"
             };
             for (int i = 0; i < headers.Length; i++)
@@ -163,32 +161,24 @@ namespace HawaiiWeatherApp
 
             XmlDocument xml = new XmlDocument();
 
-            List<string> obs_time = new List<string>();
-            List<string> weather = new List<string>();
-            List<double> temp = new List<double>();
-            List<int> humidity = new List<int>();
-            List<double> wind = new List<double>();
+            object[,] values = new object[links.Count, headers.Length];
+
+            int cnt = 0;
             foreach (weatherLinks link in links)
             {
-                xml.Load("xmlFiles\\" + link.fileName);
-                string linkObsTime_tmp = xml.GetElementsByTagName("observation_time")[0].InnerText;
-                string linkObsTime = linkObsTime_tmp.Substring(linkObsTime_tmp.Length - 25, 25);
-
-                string linkWeather = xml.GetElementsByTagName("weather")[0].InnerText;
-                double linkTemp = double.Parse(xml.GetElementsByTagName("temp_c")[0].InnerText + "°C");
-                int linkHumidity = int.Parse(xml.GetElementsByTagName("relative_humidity")[0].InnerText);
-                double linkWind = double.Parse(xml.GetElementsByTagName("wind_mph")[0].InnerText);
-
-                obs_time.Add(linkObsTime);
-                weather.Add(linkWeather);
-                temp.Add(linkTemp);
-                humidity.Add(linkHumidity);
-                wind.Add(linkWind);
+                xml.Load(Application.StartupPath.ToString() + "\\xmlFiles\\" + link.fileName);
+                values[cnt, 0] = xml.GetElementsByTagName("location")[0].InnerText;
+                values[cnt, 1] = xml.GetElementsByTagName("observation_time")[0].InnerText;
+                values[cnt, 2] = xml.GetElementsByTagName("weather")[0].InnerText;
+                values[cnt, 3] = xml.GetElementsByTagName("temp_c")[0].InnerText + "°C";
+                values[cnt, 4] = xml.GetElementsByTagName("wind_mph")[0].InnerText;
+                cnt++;
             }
 
             xlSheet.get_Range(
-            GetCell(2, 1),
-            GetCell(links.Count, 1)).Value2 = locations;
+          GetCell(2, 1),
+           GetCell(1 + values.GetLength(0), values.GetLength(1))).Value2 = values;
+
 
         }
 
