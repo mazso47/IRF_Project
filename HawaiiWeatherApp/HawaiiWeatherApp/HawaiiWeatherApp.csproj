@@ -52,6 +52,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="locationTextBox.cs" />
     <Compile Include="Outdoors.cs" />
     <Compile Include="weatherLinks.cs" />
     <Compile Include="Program.cs" />
