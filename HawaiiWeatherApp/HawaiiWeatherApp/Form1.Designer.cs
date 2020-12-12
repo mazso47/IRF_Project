@@ -37,7 +37,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox1normal = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -127,9 +127,9 @@
             this.label10.TabIndex = 10;
             this.label10.Text = "label10";
             // 
-            // textBox1
+            // textBox1normal
             // 
-            this.textBox1.AutoCompleteCustomSource.AddRange(new string[] {
+            this.textBox1normal.AutoCompleteCustomSource.AddRange(new string[] {
             "Oahu",
             "Bradshaw Army Air Field",
             "Daniel K Inouye International Airport",
@@ -142,12 +142,12 @@
             "Lanai City",
             "Lihue",
             "Oahu"});
-            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBox1.Location = new System.Drawing.Point(305, 71);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 11;
+            this.textBox1normal.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.textBox1normal.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBox1normal.Location = new System.Drawing.Point(305, 71);
+            this.textBox1normal.Name = "textBox1normal";
+            this.textBox1normal.Size = new System.Drawing.Size(100, 20);
+            this.textBox1normal.TabIndex = 11;
             // 
             // button2
             // 
@@ -207,7 +207,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBox1normal);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -235,7 +235,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox1normal;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label4;

@@ -20,6 +20,7 @@ namespace HawaiiWeatherApp
         List<string> filenames = new List<string>();
         List<string> locations = new List<string>();
         List<weatherLinks> links = new List<weatherLinks>();
+        locationTextBox textBox1 = new locationTextBox();
 
         Excel.Application xlApp; // A Microsoft Excel alkalmazás
         Excel.Workbook xlWB; // A létrehozott munkafüzet
@@ -30,6 +31,20 @@ namespace HawaiiWeatherApp
             InitializeComponent();
             fillLists();
             updateData();
+            
+            textBox1.Width = 100;
+            textBox1.Height = 20;
+            textBox1.Left = 305;
+            textBox1.Top = 100;
+            textBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
+            textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            AutoCompleteStringCollection autoStrings = new AutoCompleteStringCollection();
+            foreach (string location in locations)
+            {
+                autoStrings.Add(location);
+            };
+            textBox1.AutoCompleteCustomSource = autoStrings;
+            Controls.Add(textBox1);
         }
 
         private void fillLists()
@@ -59,6 +74,7 @@ namespace HawaiiWeatherApp
             //    updateData();
             //}
 
+            textBox1.validateLocation(textBox1.Text);
             XmlDocument xml = new XmlDocument();
             string selected = "";           
             for (int i = 0; i < links.Count; i++)
