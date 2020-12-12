@@ -224,6 +224,17 @@ namespace HawaiiWeatherApp
             return ExcelCoordinate;
         }
 
+        private void getRecommendation()
+        {
+            if (double.Parse(label8.Text.Substring(0, 2)) > 35 || double.Parse(label10.Text) > 40 || double.Parse(label8.Text.Substring(0, 2)) < 0)
+            {
+                label9.Text = Outdoors.Not_recommended.ToString();
+            }
+            else
+            {
+                label9.Text = Outdoors.Recommended.ToString();
+            }
+        }
         
 
         private void button1_Click(object sender, EventArgs e)
@@ -235,11 +246,17 @@ namespace HawaiiWeatherApp
         private void button2_Click(object sender, EventArgs e)
         {
             getWeatherData();
+            getRecommendation();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             CreateExcel();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
