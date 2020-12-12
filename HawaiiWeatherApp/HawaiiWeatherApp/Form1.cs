@@ -10,40 +10,66 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
 
 namespace HawaiiWeatherApp
 {
     public partial class Form1 : Form
     {
+        List<string> filenames = new List<string>();
+        List<string> locations = new List<string>();
+        List<weatherLinks> links = new List<weatherLinks>();
+
+      
+
         public Form1()
         {
             InitializeComponent();
-            clearData();
-            
+            updateData();
         }
+
 
         private void getWeatherData()
         {
             XmlDocument xml = new XmlDocument();
-            xml.Load("xmlFiles/oahu.xml");
-            label1.Text = xml.GetElementsByTagName("temp_c")[0].InnerText;
+            string selected = "";           
+            for (int i = 0; i < links.Count; i++)
+            {
+                if (links[i].Location == textBox1.Text)
+                {
+                    selected = links[i].fileName;
+                }
+            }
+            xml.Load("xmlFiles/" + selected);
+            label6.Text = xml.GetElementsByTagName("observation_time")[0].InnerText;
+            label7.Text = xml.GetElementsByTagName("weather")[0].InnerText;
+            label8.Text = xml.GetElementsByTagName("temp_c")[0].InnerText + "°C";
+            label9.Text = xml.GetElementsByTagName("relative_humidity")[0].InnerText;
+            label10.Text = xml.GetElementsByTagName("wind_mph")[0].InnerText;
+            //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
         }
 
+        
         private void updateData()
         {
-            List<string> filenames = new List<string>();
-            filenames.AddRange(new List<string>
-            {
-                "PHHI.xml", "PHSF.xml", "PHNL.xml", "PHTO.xml", "PHOG.xml", "PHKO.xml", "PHNG.xml", "PHBK.xml", "PHJH.xml", "PHNY.xml", "PHLI.xml", "PHJR.xml"
-            });
+            clearData();
+            filenames.AddRange
+            (
+                new List<string>
+                {
+                    "PHHI.xml", "PHSF.xml", "PHNL.xml", "PHTO.xml", "PHOG.xml", "PHKO.xml", "PHNG.xml", "PHBK.xml", "PHJH.xml", "PHNY.xml", "PHLI.xml", "PHJR.xml"
+                }
+            );
 
-            List<string> locations = new List<string>();
-            locations.AddRange(new List<string>
-            {
-                "Oahu", "Bradshaw Army Air Field", "Daniel K Inouye International Airport", "Hilo", "Kahului", "Kailua / Kona", "Kaneohe", "Kekaha", "Lahaina", "Lanai City", "Lihue", "Oahu"
-            });
+            locations.AddRange
+            (
+                new List<string>
+                {
+                    "Oahu", "Bradshaw Army Air Field", "Daniel K Inouye International Airport", "Hilo", "Kahului", "Kailua / Kona", "Kaneohe", "Kekaha", "Lahaina", "Lanai City", "Lihue", "Oahu"
+                }
+            );
 
-            List<weatherLinks> links = new List<weatherLinks>();
             for (int i = 0; i < filenames.Count; i++)
             {
                 weatherLinks l = new weatherLinks();
@@ -75,6 +101,12 @@ namespace HawaiiWeatherApp
         private void button1_Click(object sender, EventArgs e)
         {
             updateData();
+           
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            getWeatherData();
         }
     }
 }
