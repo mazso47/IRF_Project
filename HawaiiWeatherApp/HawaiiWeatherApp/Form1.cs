@@ -206,8 +206,9 @@ namespace HawaiiWeatherApp
             Excel.Range rightRange = xlSheet.get_Range(GetCell(1, 2), GetCell(1 + values.GetLength(0), headers.Length));
             rightRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
 
-            Excel.Range leftRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1 + values.GetLength(0), 1));
+            Excel.Range leftRange = xlSheet.get_Range(GetCell(2, 1), GetCell(1 + values.GetLength(0), 1));
             leftRange.Font.Bold = true;
+            leftRange.Interior.Color = Color.Linen;
 
             Excel.Range tempRange = xlSheet.get_Range(GetCell(1, 4), GetCell(1 + values.GetLength(0), 4));
             tempRange.Font.Bold = true;
