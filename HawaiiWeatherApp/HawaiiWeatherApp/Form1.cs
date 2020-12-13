@@ -318,7 +318,6 @@ namespace HawaiiWeatherApp
         {
             SaveFileDialog sfd = new SaveFileDialog();
 
-            // Opcionális rész
             sfd.InitialDirectory = Application.StartupPath;
             sfd.Filter = "Comma Seperated Values (*.csv)|*.csv";
             sfd.DefaultExt = "csv"; 
@@ -341,29 +340,22 @@ namespace HawaiiWeatherApp
                 sw.Write("Relative Humidity");
                 sw.Write(";");
                 sw.WriteLine();
-                // Végigmegyünk a hallgató lista elemein
+
                 foreach (weatherLinks link in links)
                 {
                     xml.Load(Application.StartupPath.ToString() + "\\xmlFiles\\" + link.fileName);
 
-                    var location = xml.GetElementsByTagName("location")[0]?.InnerText.ToString();
-                    var obsTime = xml.GetElementsByTagName("observation_time")[0]?.InnerText.ToString();
-                    var weather = xml.GetElementsByTagName("weather")[0]?.InnerText.ToString();
-                    var temp = xml.GetElementsByTagName("temp_c")[0]?.InnerText.ToString();
-                    var wind = xml.GetElementsByTagName("wind_mph")[0]?.InnerText.ToString();
-                    var hum = xml.GetElementsByTagName("relative_humidity")[0]?.InnerText.ToString();
-
-                    sw.Write(location);
+                    sw.Write(xml.GetElementsByTagName("location")[0]?.InnerText.ToString());
                     sw.Write(";");
-                    sw.Write(obsTime);
+                    sw.Write(xml.GetElementsByTagName("observation_time")[0]?.InnerText.ToString());
                     sw.Write(";");
-                    sw.Write(weather);
+                    sw.Write(xml.GetElementsByTagName("weather")[0]?.InnerText.ToString());
                     sw.Write(";");
-                    sw.Write(temp);
+                    sw.Write(xml.GetElementsByTagName("temp_c")[0]?.InnerText.ToString());
                     sw.Write(";");
-                    sw.Write(wind);
+                    sw.Write(xml.GetElementsByTagName("wind_mph")[0]?.InnerText.ToString());
                     sw.Write(";");
-                    sw.Write(hum);
+                    sw.Write(xml.GetElementsByTagName("relative_humidity")[0]?.InnerText.ToString());
                     sw.WriteLine();
                 }
             }
