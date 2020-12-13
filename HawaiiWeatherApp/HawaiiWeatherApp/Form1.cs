@@ -31,41 +31,11 @@ namespace HawaiiWeatherApp
             InitializeComponent();
             fillLists();
             updateData();
-            
-            locationTextBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
-            locationTextBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            AutoCompleteStringCollection autoStrings = new AutoCompleteStringCollection();
-            foreach (string location in locations)
-            {
-                autoStrings.Add(location); 
-            };
-            locationTextBox1.AutoCompleteCustomSource = autoStrings;
-
-            obsNameTimeLabel.Text = Resource1.obsTime;
-            weatherNameLabel.Text = Resource1.weather;
-            tempNameLabel.Text = Resource1.temp;
-            windNameLabel.Text = Resource1.wind;
-            humidityNameLabel.Text = Resource1.hum;
-            outdoorsNameLabel.Text = Resource1.outdoors;
-
-            obsTimeLabel.Text = Resource1.emptyValue;
-            weatherLabel.Text = Resource1.emptyValue;
-            tempLabel.Text = Resource1.emptyValue;
-            windLabel.Text = Resource1.emptyValue;
-            humidityLabel.Text = Resource1.emptyValue;
-            outdoorsLabel.Text = Resource1.emptyValue;
-            exampleLabel.Text = Resource1.exampleLabel;
-            locationLabel.Text = Resource1.locationLabel;
-
-            weatherButton.Text = Resource1.weatherButton;
-            updateButton.Text = Resource1.updateButton;
-            excelButton.Text = Resource1.excelButton;
-            exitButton.Text = Resource1.exitButton;
-
-            this.Text = "Hawaii Weather App";
-            
+            setTexts();
+            textBoxAutoComplete();
         }
 
+     
         private void fillLists()
         {
             filenames.AddRange
@@ -143,20 +113,7 @@ namespace HawaiiWeatherApp
             }
         }
 
-        private void clearFiles()
-        {
-            DirectoryInfo di = new DirectoryInfo(Application.StartupPath.ToString() + "\\xmlFiles");
-
-            foreach (FileInfo file in di.GetFiles())
-            {
-                file.Delete();
-            }
-        }
-
-        private void clearLinks()
-        {
-            links.Clear();
-        }
+        
 
         private void CreateExcel()
         {
@@ -272,6 +229,59 @@ namespace HawaiiWeatherApp
             ExcelCoordinate += x.ToString();
 
             return ExcelCoordinate;
+        }
+
+        private void clearFiles()
+        {
+            DirectoryInfo di = new DirectoryInfo(Application.StartupPath.ToString() + "\\xmlFiles");
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+        }
+
+        private void clearLinks()
+        {
+            links.Clear();
+        }
+
+        private void setTexts()
+        {
+            obsNameTimeLabel.Text = Resource1.obsTime;
+            weatherNameLabel.Text = Resource1.weather;
+            tempNameLabel.Text = Resource1.temp;
+            windNameLabel.Text = Resource1.wind;
+            humidityNameLabel.Text = Resource1.hum;
+            outdoorsNameLabel.Text = Resource1.outdoors;
+
+            obsTimeLabel.Text = Resource1.emptyValue;
+            weatherLabel.Text = Resource1.emptyValue;
+            tempLabel.Text = Resource1.emptyValue;
+            windLabel.Text = Resource1.emptyValue;
+            humidityLabel.Text = Resource1.emptyValue;
+            outdoorsLabel.Text = Resource1.emptyValue;
+            exampleLabel.Text = Resource1.exampleLabel;
+            locationLabel.Text = Resource1.locationLabel;
+
+            weatherButton.Text = Resource1.weatherButton;
+            updateButton.Text = Resource1.updateButton;
+            excelButton.Text = Resource1.excelButton;
+            exitButton.Text = Resource1.exitButton;
+            this.Text = Resource1.appName;
+        }
+
+        private void textBoxAutoComplete()
+        {
+            locationTextBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
+            locationTextBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            AutoCompleteStringCollection autoStrings = new AutoCompleteStringCollection();
+            foreach (string location in locations)
+            {
+                autoStrings.Add(location);
+            };
+            locationTextBox1.AutoCompleteCustomSource = autoStrings;
+
         }
 
         private void weatherButton_Click(object sender, EventArgs e)

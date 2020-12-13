@@ -61,6 +61,15 @@ namespace HawaiiWeatherApp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hawaii Weather App.
+        /// </summary>
+        internal static string appName {
+            get {
+                return ResourceManager.GetString("appName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string emptyValue {
