@@ -55,12 +55,14 @@ namespace HawaiiWeatherApp
             windLabel.Text = Resource1.emptyValue;
             humidityLabel.Text = Resource1.emptyValue;
             outdoorsLabel.Text = Resource1.emptyValue;
-
+            exampleLabel.Text = Resource1.exampleLabel;
 
             weatherButton.Text = Resource1.weatherButton;
             updateButton.Text = Resource1.updateButton;
             excelButton.Text = Resource1.excelButton;
             exitButton.Text = Resource1.exitButton;
+
+            
         }
 
         private void fillLists()

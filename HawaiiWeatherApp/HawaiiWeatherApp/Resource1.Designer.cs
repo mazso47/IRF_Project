@@ -70,6 +70,15 @@ namespace HawaiiWeatherApp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (e.g., Lanai City).
+        /// </summary>
+        internal static string exampleLabel {
+            get {
+                return ResourceManager.GetString("exampleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export to Excel.
         /// </summary>
         internal static string excelButton {

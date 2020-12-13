@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.obsNameTimeLabel = new System.Windows.Forms.Label();
             this.updateButton = new System.Windows.Forms.Button();
             this.weatherNameLabel = new System.Windows.Forms.Label();
@@ -44,13 +45,14 @@
             this.exitButton = new System.Windows.Forms.Button();
             this.humidityNameLabel = new System.Windows.Forms.Label();
             this.humidityLabel = new System.Windows.Forms.Label();
+            this.exampleLabel = new System.Windows.Forms.Label();
             this.locationTextBox1 = new HawaiiWeatherApp.locationTextBox();
             this.SuspendLayout();
             // 
             // obsNameTimeLabel
             // 
             this.obsNameTimeLabel.AutoSize = true;
-            this.obsNameTimeLabel.Location = new System.Drawing.Point(28, 188);
+            this.obsNameTimeLabel.Location = new System.Drawing.Point(27, 78);
             this.obsNameTimeLabel.Name = "obsNameTimeLabel";
             this.obsNameTimeLabel.Size = new System.Drawing.Size(35, 13);
             this.obsNameTimeLabel.TabIndex = 0;
@@ -58,7 +60,7 @@
             // 
             // updateButton
             // 
-            this.updateButton.Location = new System.Drawing.Point(53, 373);
+            this.updateButton.Location = new System.Drawing.Point(67, 289);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(141, 23);
             this.updateButton.TabIndex = 1;
@@ -69,7 +71,7 @@
             // weatherNameLabel
             // 
             this.weatherNameLabel.AutoSize = true;
-            this.weatherNameLabel.Location = new System.Drawing.Point(28, 221);
+            this.weatherNameLabel.Location = new System.Drawing.Point(27, 105);
             this.weatherNameLabel.Name = "weatherNameLabel";
             this.weatherNameLabel.Size = new System.Drawing.Size(35, 13);
             this.weatherNameLabel.TabIndex = 2;
@@ -78,7 +80,7 @@
             // tempNameLabel
             // 
             this.tempNameLabel.AutoSize = true;
-            this.tempNameLabel.Location = new System.Drawing.Point(28, 252);
+            this.tempNameLabel.Location = new System.Drawing.Point(27, 132);
             this.tempNameLabel.Name = "tempNameLabel";
             this.tempNameLabel.Size = new System.Drawing.Size(35, 13);
             this.tempNameLabel.TabIndex = 3;
@@ -87,7 +89,7 @@
             // outdoorsNameLabel
             // 
             this.outdoorsNameLabel.AutoSize = true;
-            this.outdoorsNameLabel.Location = new System.Drawing.Point(28, 327);
+            this.outdoorsNameLabel.Location = new System.Drawing.Point(27, 213);
             this.outdoorsNameLabel.Name = "outdoorsNameLabel";
             this.outdoorsNameLabel.Size = new System.Drawing.Size(35, 13);
             this.outdoorsNameLabel.TabIndex = 5;
@@ -96,7 +98,7 @@
             // obsTimeLabel
             // 
             this.obsTimeLabel.AutoSize = true;
-            this.obsTimeLabel.Location = new System.Drawing.Point(153, 188);
+            this.obsTimeLabel.Location = new System.Drawing.Point(136, 78);
             this.obsTimeLabel.Name = "obsTimeLabel";
             this.obsTimeLabel.Size = new System.Drawing.Size(35, 13);
             this.obsTimeLabel.TabIndex = 6;
@@ -105,7 +107,7 @@
             // weatherLabel
             // 
             this.weatherLabel.AutoSize = true;
-            this.weatherLabel.Location = new System.Drawing.Point(153, 221);
+            this.weatherLabel.Location = new System.Drawing.Point(136, 105);
             this.weatherLabel.Name = "weatherLabel";
             this.weatherLabel.Size = new System.Drawing.Size(35, 13);
             this.weatherLabel.TabIndex = 7;
@@ -114,7 +116,7 @@
             // tempLabel
             // 
             this.tempLabel.AutoSize = true;
-            this.tempLabel.Location = new System.Drawing.Point(153, 252);
+            this.tempLabel.Location = new System.Drawing.Point(136, 132);
             this.tempLabel.Name = "tempLabel";
             this.tempLabel.Size = new System.Drawing.Size(35, 13);
             this.tempLabel.TabIndex = 8;
@@ -123,7 +125,7 @@
             // outdoorsLabel
             // 
             this.outdoorsLabel.AutoSize = true;
-            this.outdoorsLabel.Location = new System.Drawing.Point(153, 327);
+            this.outdoorsLabel.Location = new System.Drawing.Point(136, 213);
             this.outdoorsLabel.Name = "outdoorsLabel";
             this.outdoorsLabel.Size = new System.Drawing.Size(41, 13);
             this.outdoorsLabel.TabIndex = 10;
@@ -131,7 +133,7 @@
             // 
             // weatherButton
             // 
-            this.weatherButton.Location = new System.Drawing.Point(53, 108);
+            this.weatherButton.Location = new System.Drawing.Point(67, 38);
             this.weatherButton.Name = "weatherButton";
             this.weatherButton.Size = new System.Drawing.Size(141, 23);
             this.weatherButton.TabIndex = 12;
@@ -141,7 +143,7 @@
             // 
             // excelButton
             // 
-            this.excelButton.Location = new System.Drawing.Point(53, 402);
+            this.excelButton.Location = new System.Drawing.Point(67, 318);
             this.excelButton.Name = "excelButton";
             this.excelButton.Size = new System.Drawing.Size(141, 23);
             this.excelButton.TabIndex = 13;
@@ -152,7 +154,7 @@
             // windNameLabel
             // 
             this.windNameLabel.AutoSize = true;
-            this.windNameLabel.Location = new System.Drawing.Point(28, 279);
+            this.windNameLabel.Location = new System.Drawing.Point(27, 159);
             this.windNameLabel.Name = "windNameLabel";
             this.windNameLabel.Size = new System.Drawing.Size(35, 13);
             this.windNameLabel.TabIndex = 14;
@@ -161,7 +163,7 @@
             // windLabel
             // 
             this.windLabel.AutoSize = true;
-            this.windLabel.Location = new System.Drawing.Point(153, 279);
+            this.windLabel.Location = new System.Drawing.Point(136, 159);
             this.windLabel.Name = "windLabel";
             this.windLabel.Size = new System.Drawing.Size(35, 13);
             this.windLabel.TabIndex = 15;
@@ -169,7 +171,7 @@
             // 
             // exitButton
             // 
-            this.exitButton.Location = new System.Drawing.Point(47, 465);
+            this.exitButton.Location = new System.Drawing.Point(67, 383);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(141, 23);
             this.exitButton.TabIndex = 16;
@@ -180,7 +182,7 @@
             // humidityNameLabel
             // 
             this.humidityNameLabel.AutoSize = true;
-            this.humidityNameLabel.Location = new System.Drawing.Point(28, 302);
+            this.humidityNameLabel.Location = new System.Drawing.Point(27, 186);
             this.humidityNameLabel.Name = "humidityNameLabel";
             this.humidityNameLabel.Size = new System.Drawing.Size(35, 13);
             this.humidityNameLabel.TabIndex = 17;
@@ -189,24 +191,37 @@
             // humidityLabel
             // 
             this.humidityLabel.AutoSize = true;
-            this.humidityLabel.Location = new System.Drawing.Point(153, 302);
+            this.humidityLabel.Location = new System.Drawing.Point(136, 186);
             this.humidityLabel.Name = "humidityLabel";
             this.humidityLabel.Size = new System.Drawing.Size(35, 13);
             this.humidityLabel.TabIndex = 18;
             this.humidityLabel.Text = "label2";
             // 
+            // exampleLabel
+            // 
+            this.exampleLabel.AutoSize = true;
+            this.exampleLabel.Location = new System.Drawing.Point(122, 22);
+            this.exampleLabel.Name = "exampleLabel";
+            this.exampleLabel.Size = new System.Drawing.Size(35, 13);
+            this.exampleLabel.TabIndex = 20;
+            this.exampleLabel.Text = "label1";
+            this.exampleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // locationTextBox1
             // 
-            this.locationTextBox1.Location = new System.Drawing.Point(74, 82);
+            this.locationTextBox1.Location = new System.Drawing.Point(67, 0);
             this.locationTextBox1.Name = "locationTextBox1";
-            this.locationTextBox1.Size = new System.Drawing.Size(100, 20);
+            this.locationTextBox1.Size = new System.Drawing.Size(141, 20);
             this.locationTextBox1.TabIndex = 19;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(356, 500);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ClientSize = new System.Drawing.Size(284, 430);
+            this.Controls.Add(this.exampleLabel);
             this.Controls.Add(this.locationTextBox1);
             this.Controls.Add(this.humidityLabel);
             this.Controls.Add(this.humidityNameLabel);
@@ -224,6 +239,7 @@
             this.Controls.Add(this.weatherNameLabel);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.obsNameTimeLabel);
+            this.DoubleBuffered = true;
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -250,6 +266,7 @@
         private System.Windows.Forms.Label humidityNameLabel;
         private System.Windows.Forms.Label humidityLabel;
         private locationTextBox locationTextBox1;
+        private System.Windows.Forms.Label exampleLabel;
     }
 }
 
