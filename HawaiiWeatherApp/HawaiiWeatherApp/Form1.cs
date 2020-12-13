@@ -24,17 +24,29 @@ namespace HawaiiWeatherApp
 
         Excel.Application xlApp; 
         Excel.Workbook xlWB; 
-        Excel.Worksheet xlSheet; 
+        Excel.Worksheet xlSheet;
 
         public Form1()
         {
             InitializeComponent();
+            checkDir();
             fillLists();
             updateData();
             setTexts();
             textBoxAutoComplete();
         }
 
+        private void checkDir()
+        {
+            if (Directory.Exists(Application.StartupPath.ToString() + "\\xmlFiles"))
+            {
+                return;
+            }
+            else
+            {
+                DirectoryInfo di = Directory.CreateDirectory(Application.StartupPath.ToString() + "\\xmlFiles");
+            }
+        }
      
         private void fillLists()
         {
