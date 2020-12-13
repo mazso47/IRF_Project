@@ -70,6 +70,15 @@ namespace HawaiiWeatherApp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export to CSV.
+        /// </summary>
+        internal static string csvButton {
+            get {
+                return ResourceManager.GetString("csvButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string emptyValue {

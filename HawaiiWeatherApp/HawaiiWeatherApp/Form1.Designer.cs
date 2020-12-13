@@ -48,6 +48,7 @@
             this.updateButton = new HawaiiWeatherApp.Classes.hawaiiButton();
             this.weatherButton = new HawaiiWeatherApp.Classes.hawaiiButton();
             this.locationTextBox1 = new HawaiiWeatherApp.locationTextBox();
+            this.csvButton = new HawaiiWeatherApp.Classes.hawaiiButton();
             this.SuspendLayout();
             // 
             // obsNameTimeLabel
@@ -210,7 +211,7 @@
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exitButton.Font = new System.Drawing.Font("Nirmala UI", 8F);
             this.exitButton.ForeColor = System.Drawing.Color.SaddleBrown;
-            this.exitButton.Location = new System.Drawing.Point(67, 355);
+            this.exitButton.Location = new System.Drawing.Point(67, 384);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(141, 25);
             this.exitButton.TabIndex = 24;
@@ -276,10 +277,30 @@
             // 
             this.locationTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.locationTextBox1.Font = new System.Drawing.Font("Nirmala UI", 8F);
+            this.locationTextBox1.ForeColor = System.Drawing.Color.SaddleBrown;
             this.locationTextBox1.Location = new System.Drawing.Point(67, 17);
             this.locationTextBox1.Name = "locationTextBox1";
-            this.locationTextBox1.Size = new System.Drawing.Size(141, 20);
+            this.locationTextBox1.Size = new System.Drawing.Size(141, 22);
             this.locationTextBox1.TabIndex = 19;
+            // 
+            // csvButton
+            // 
+            this.csvButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.csvButton.BackColor = System.Drawing.Color.PeachPuff;
+            this.csvButton.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
+            this.csvButton.FlatAppearance.BorderSize = 2;
+            this.csvButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.csvButton.Font = new System.Drawing.Font("Nirmala UI", 8F);
+            this.csvButton.ForeColor = System.Drawing.Color.SaddleBrown;
+            this.csvButton.Location = new System.Drawing.Point(67, 335);
+            this.csvButton.Name = "csvButton";
+            this.csvButton.Size = new System.Drawing.Size(141, 25);
+            this.csvButton.TabIndex = 26;
+            this.csvButton.Text = "hawaiiButton3";
+            this.csvButton.UseVisualStyleBackColor = false;
+            this.csvButton.Click += new System.EventHandler(this.csvButton_Click);
             // 
             // Form1
             // 
@@ -287,7 +308,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(284, 412);
+            this.ClientSize = new System.Drawing.Size(284, 430);
+            this.Controls.Add(this.csvButton);
             this.Controls.Add(this.locationLabel);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.excelButton);
@@ -338,6 +360,7 @@
         private Classes.hawaiiButton excelButton;
         private Classes.hawaiiButton exitButton;
         private System.Windows.Forms.Label locationLabel;
+        private Classes.hawaiiButton csvButton;
     }
 }
 

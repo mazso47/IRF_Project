@@ -120,6 +120,9 @@
   <data name="appName" xml:space="preserve">
     <value>Hawaii Weather App</value>
   </data>
+  <data name="csvButton" xml:space="preserve">
+    <value>Export to CSV</value>
+  </data>
   <data name="emptyValue" xml:space="preserve">
     <value />
   </data>
