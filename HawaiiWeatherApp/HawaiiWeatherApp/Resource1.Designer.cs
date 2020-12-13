@@ -70,7 +70,7 @@ namespace HawaiiWeatherApp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (e.g., Lanai City).
+        ///   Looks up a localized string similar to (e.g., Kahului).
         /// </summary>
         internal static string exampleLabel {
             get {
@@ -102,6 +102,15 @@ namespace HawaiiWeatherApp {
         internal static string hum {
             get {
                 return ResourceManager.GetString("hum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location:.
+        /// </summary>
+        internal static string locationLabel {
+            get {
+                return ResourceManager.GetString("locationLabel", resourceCulture);
             }
         }
         

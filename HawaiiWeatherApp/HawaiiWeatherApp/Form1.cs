@@ -21,18 +21,17 @@ namespace HawaiiWeatherApp
         List<string> filenames = new List<string>();
         List<string> locations = new List<string>();
         List<weatherLinks> links = new List<weatherLinks>();
-        
 
-        Excel.Application xlApp; // A Microsoft Excel alkalmazás
-        Excel.Workbook xlWB; // A létrehozott munkafüzet
-        Excel.Worksheet xlSheet; // Munkalap a munkafüzeten belül
+        Excel.Application xlApp; 
+        Excel.Workbook xlWB; 
+        Excel.Worksheet xlSheet; 
 
         public Form1()
         {
             InitializeComponent();
             fillLists();
             updateData();
-           
+            
             locationTextBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
             locationTextBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
             AutoCompleteStringCollection autoStrings = new AutoCompleteStringCollection();
@@ -56,12 +55,14 @@ namespace HawaiiWeatherApp
             humidityLabel.Text = Resource1.emptyValue;
             outdoorsLabel.Text = Resource1.emptyValue;
             exampleLabel.Text = Resource1.exampleLabel;
+            locationLabel.Text = Resource1.locationLabel;
 
             weatherButton.Text = Resource1.weatherButton;
             updateButton.Text = Resource1.updateButton;
             excelButton.Text = Resource1.excelButton;
             exitButton.Text = Resource1.exitButton;
 
+            this.Text = "Hawaii Weather App";
             
         }
 
@@ -79,7 +80,7 @@ namespace HawaiiWeatherApp
             (
                 new List<string>
                 {
-                    "Oahu", "Bradshaw Army Air Field", "Daniel K Inouye International Airport", "Hilo", "Kahului", "Kailua / Kona", "Kaneohe", "Kekaha", "Lahaina", "Lanai City", "Lihue", "Oahu"
+                    "Oahu", "Bradshaw Army Air Field", "Daniel K Inouye International Airport", "Hilo", "Kahului", "Kailua-Kona", "Kaneohe", "Kekaha", "Lahaina", "Lanai City", "Lihue", "Oahu"
                 }
             );
         }
@@ -87,37 +88,30 @@ namespace HawaiiWeatherApp
         private void getWeatherData()
         {
 
-            //if (Directory.GetFileSystemEntries(Application.StartupPath.ToString() + "\\xmlFiles\\").Length == 0)
-            //{
-            //    updateData();
-            //}
-
-                XmlDocument xml = new XmlDocument();
-                string selected = "";
-                for (int i = 0; i < links.Count; i++)
+            XmlDocument xml = new XmlDocument();
+            string selected = "";
+            for (int i = 0; i < links.Count; i++)
+            {
+                if (links[i].Location == locationTextBox1.Text)
                 {
-                    if (links[i].Location == locationTextBox1.Text)
-                    {
-                        selected = links[i].fileName;
-                    }
+                    selected = links[i].fileName;
                 }
-                xml.Load("xmlFiles\\" + selected);
-                string obsTimeTmp = xml.GetElementsByTagName("observation_time")[0].InnerText;
-                obsTimeLabel.Text = obsTimeTmp.Substring(obsTimeTmp.Length - 25, 25);
-                weatherLabel.Text = xml.GetElementsByTagName("weather")[0].InnerText;
-                tempLabel.Text = xml.GetElementsByTagName("temp_c")[0].InnerText + "°C";
-                windLabel.Text = xml.GetElementsByTagName("wind_mph")[0].InnerText;
-                humidityLabel.Text = xml.GetElementsByTagName("relative_humidity")[0].InnerText + "%";
-                //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
-            
-            
+            }
+            xml.Load("xmlFiles\\" + selected);
+            string obsTimeTmp = xml.GetElementsByTagName("observation_time")[0]?.InnerText;
+            obsTimeLabel.Text = obsTimeTmp.Substring(obsTimeTmp.Length - 25, 25);
+            weatherLabel.Text = xml.GetElementsByTagName("weather")[0]?.InnerText;
+            tempLabel.Text = xml.GetElementsByTagName("temp_c")[0]?.InnerText + "°C";
+            windLabel.Text = xml.GetElementsByTagName("wind_mph")[0]?.InnerText;
+            humidityLabel.Text = xml.GetElementsByTagName("relative_humidity")[0]?.InnerText + "%";
+            //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
         }
 
-        
+
         private void updateData()
         {
-            clearData();
-            
+            clearFiles();
+            clearLinks();
 
             for (int i = 0; i < filenames.Count; i++)
             {
@@ -135,9 +129,21 @@ namespace HawaiiWeatherApp
                 string localFilePath = Application.StartupPath.ToString() + "\\xmlFiles\\" + link.fileName;
                 webClient.DownloadFile(url, localFilePath);
             }
+           
+        }
+        private void getRecommendation()
+        {
+            if (double.Parse(tempLabel.Text.Substring(0, 2)) > 35 || double.Parse(windLabel.Text) > 40 || double.Parse(tempLabel.Text.Substring(0, 2)) < 0)
+            {
+                outdoorsLabel.Text = Outdoors.Not_recommended.ToString();
+            }
+            else
+            {
+                outdoorsLabel.Text = Outdoors.Recommended.ToString();
+            }
         }
 
-        private void clearData()
+        private void clearFiles()
         {
             DirectoryInfo di = new DirectoryInfo(Application.StartupPath.ToString() + "\\xmlFiles");
 
@@ -147,32 +153,29 @@ namespace HawaiiWeatherApp
             }
         }
 
+        private void clearLinks()
+        {
+            links.Clear();
+        }
+
         private void CreateExcel()
         {
             try
-            {
-                // Excel elindítása és az applikáció objektum betöltése
+            {                
                 xlApp = new Excel.Application();
-
-                // Új munkafüzet
                 xlWB = xlApp.Workbooks.Add(Missing.Value);
-
-                // Új munkalap
                 xlSheet = xlWB.ActiveSheet;
-
-                // Tábla létrehozása
-                CreateTable(); // Ennek megírása a következő feladatrészben következik
-
-                // Control átadása a felhasználónak
+                
+                CreateTable(); 
+                
                 xlApp.Visible = true;
                 xlApp.UserControl = true;
             }
-            catch (Exception ex) // Hibakezelés a beépített hibaüzenettel
+            catch (Exception ex) 
             {
                 string errMsg = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
                 MessageBox.Show(errMsg, "Error");
 
-                // Hiba esetén az Excel applikáció bezárása automatikusan
                 xlWB.Close(false, Type.Missing, Type.Missing);
                 xlApp.Quit();
                 xlWB = null;
@@ -199,7 +202,6 @@ namespace HawaiiWeatherApp
 
 
             XmlDocument xml = new XmlDocument();
-
             object[,] values = new object[links.Count, headers.Length];
 
             int cnt = 0;
@@ -272,25 +274,6 @@ namespace HawaiiWeatherApp
             return ExcelCoordinate;
         }
 
-        private void getRecommendation()
-        {
-            if (double.Parse(tempLabel.Text.Substring(0, 2)) > 35 || double.Parse(windLabel.Text) > 40 || double.Parse(tempLabel.Text.Substring(0, 2)) < 0)
-            {
-                outdoorsLabel.Text = Outdoors.Not_recommended.ToString();
-            }
-            else
-            {
-                outdoorsLabel.Text = Outdoors.Recommended.ToString();
-            }
-        }
-        
-
-        private void updateButton_Click(object sender, EventArgs e)
-        {
-            updateData();
-           
-        }
-
         private void weatherButton_Click(object sender, EventArgs e)
         {
             if (locationTextBox1.validateLocation(locationTextBox1.Text))
@@ -302,7 +285,11 @@ namespace HawaiiWeatherApp
             {
                 MessageBox.Show("Invalid location!");
             }
-            
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            updateData();
         }
 
         private void excelButton_Click(object sender, EventArgs e)
@@ -312,7 +299,6 @@ namespace HawaiiWeatherApp
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-          
             Application.Exit();
         }
     }

@@ -121,7 +121,7 @@
     <value />
   </data>
   <data name="exampleLabel" xml:space="preserve">
-    <value>(e.g., Lanai City)</value>
+    <value>(e.g., Kahului)</value>
   </data>
   <data name="excelButton" xml:space="preserve">
     <value>Export to Excel</value>
@@ -131,6 +131,9 @@
   </data>
   <data name="hum" xml:space="preserve">
     <value>Humidity:</value>
+  </data>
+  <data name="locationLabel" xml:space="preserve">
+    <value>Location:</value>
   </data>
   <data name="obsTime" xml:space="preserve">
     <value>Observation Time:</value>

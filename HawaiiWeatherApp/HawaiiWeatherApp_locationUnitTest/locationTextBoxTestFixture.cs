@@ -16,7 +16,10 @@ namespace HawaiiWeatherApp_locationUnitTest
             TestCase("ohao", false),
             TestCase("123", false),
             TestCase("ogjeo3242o!+_f", false),
-            TestCase("Ohao", true)
+            TestCase("Ohao", true),
+            TestCase("Lanai City", true),
+            TestCase("Bradshaw Army Air Field", true),
+            TestCase("Kailua-Kona", true)
         ]
         public void TestValidateLocation(string location, bool expectedResult)
         {
