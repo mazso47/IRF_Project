@@ -13,6 +13,7 @@ using System.Xml;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
 
+
 namespace HawaiiWeatherApp
 {
     public partial class Form1 : Form
@@ -20,7 +21,7 @@ namespace HawaiiWeatherApp
         List<string> filenames = new List<string>();
         List<string> locations = new List<string>();
         List<weatherLinks> links = new List<weatherLinks>();
-        locationTextBox textBox1 = new locationTextBox();
+        
 
         Excel.Application xlApp; // A Microsoft Excel alkalmazás
         Excel.Workbook xlWB; // A létrehozott munkafüzet
@@ -31,20 +32,35 @@ namespace HawaiiWeatherApp
             InitializeComponent();
             fillLists();
             updateData();
-            
-            textBox1.Width = 100;
-            textBox1.Height = 20;
-            textBox1.Left = 305;
-            textBox1.Top = 100;
-            textBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+           
+            locationTextBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
+            locationTextBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
             AutoCompleteStringCollection autoStrings = new AutoCompleteStringCollection();
             foreach (string location in locations)
             {
-                autoStrings.Add(location);
+                autoStrings.Add(location); 
             };
-            textBox1.AutoCompleteCustomSource = autoStrings;
-            Controls.Add(textBox1);
+            locationTextBox1.AutoCompleteCustomSource = autoStrings;
+
+            obsNameTimeLabel.Text = Resource1.obsTime;
+            weatherNameLabel.Text = Resource1.weather;
+            tempNameLabel.Text = Resource1.temp;
+            windNameLabel.Text = Resource1.wind;
+            humidityNameLabel.Text = Resource1.hum;
+            outdoorsNameLabel.Text = Resource1.outdoors;
+
+            obsTimeLabel.Text = Resource1.emptyValue;
+            weatherLabel.Text = Resource1.emptyValue;
+            tempLabel.Text = Resource1.emptyValue;
+            windLabel.Text = Resource1.emptyValue;
+            humidityLabel.Text = Resource1.emptyValue;
+            outdoorsLabel.Text = Resource1.emptyValue;
+
+
+            weatherButton.Text = Resource1.weatherButton;
+            updateButton.Text = Resource1.updateButton;
+            excelButton.Text = Resource1.excelButton;
+            exitButton.Text = Resource1.exitButton;
         }
 
         private void fillLists()
@@ -74,22 +90,25 @@ namespace HawaiiWeatherApp
             //    updateData();
             //}
 
-            textBox1.validateLocation(textBox1.Text);
-            XmlDocument xml = new XmlDocument();
-            string selected = "";           
-            for (int i = 0; i < links.Count; i++)
-            {
-                if (links[i].Location == textBox1.Text)
+                XmlDocument xml = new XmlDocument();
+                string selected = "";
+                for (int i = 0; i < links.Count; i++)
                 {
-                    selected = links[i].fileName;
+                    if (links[i].Location == locationTextBox1.Text)
+                    {
+                        selected = links[i].fileName;
+                    }
                 }
-            }
-            xml.Load("xmlFiles\\" + selected);
-            label6.Text = xml.GetElementsByTagName("observation_time")[0].InnerText;
-            label7.Text = xml.GetElementsByTagName("weather")[0].InnerText;
-            label8.Text = xml.GetElementsByTagName("temp_c")[0].InnerText + "°C";
-            label10.Text = xml.GetElementsByTagName("wind_mph")[0].InnerText;
-            //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
+                xml.Load("xmlFiles\\" + selected);
+                string obsTimeTmp = xml.GetElementsByTagName("observation_time")[0].InnerText;
+                obsTimeLabel.Text = obsTimeTmp.Substring(obsTimeTmp.Length - 25, 25);
+                weatherLabel.Text = xml.GetElementsByTagName("weather")[0].InnerText;
+                tempLabel.Text = xml.GetElementsByTagName("temp_c")[0].InnerText + "°C";
+                windLabel.Text = xml.GetElementsByTagName("wind_mph")[0].InnerText;
+                humidityLabel.Text = xml.GetElementsByTagName("relative_humidity")[0].InnerText + "%";
+                //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
+            
+            
         }
 
         
@@ -159,6 +178,7 @@ namespace HawaiiWeatherApp
             }
         }
 
+      
         private void CreateTable()
         {
             string[] headers = new string[]
@@ -167,7 +187,8 @@ namespace HawaiiWeatherApp
                 "Observation Time",
                 "Weather",
                 "Temperature (°C)",
-                "Wind (MpH)"
+                "Wind (MpH)",
+                "Relative Humidity (%)"
             };
             for (int i = 0; i < headers.Length; i++)
             {
@@ -183,15 +204,24 @@ namespace HawaiiWeatherApp
             foreach (weatherLinks link in links)
             {
                 xml.Load(Application.StartupPath.ToString() + "\\xmlFiles\\" + link.fileName);
-                values[cnt, 0] = xml.GetElementsByTagName("location")[0].InnerText;
+                
+                var location = xml.GetElementsByTagName("location")[0]?.InnerText.ToString();
+                var obsTime = xml.GetElementsByTagName("observation_time")[0]?.InnerText.ToString();
+                var weather = xml.GetElementsByTagName("weather")[0]?.InnerText.ToString();
+                var temp = xml.GetElementsByTagName("temp_c")[0]?.InnerText.ToString();
+                var wind = xml.GetElementsByTagName("wind_mph")[0]?.InnerText.ToString();
+                var hum = xml.GetElementsByTagName("relative_humidity")[0]?.InnerText.ToString();
 
-                string obsTmp = xml.GetElementsByTagName("observation_time")[0].InnerText;
-                values[cnt, 1] = obsTmp.Substring(obsTmp.Length - 25, 25);
+                values[cnt, 0] = location;
+                values[cnt, 1] = obsTime.Substring(obsTime.Length - 25, 25);
+                values[cnt, 2] = weather;
+                values[cnt, 3] = temp;
+                values[cnt, 4] = wind;
+                values[cnt, 5] = hum;
 
-                values[cnt, 2] = xml.GetElementsByTagName("weather")[0].InnerText;
-                values[cnt, 3] = xml.GetElementsByTagName("temp_c")[0].InnerText;
-                values[cnt, 4] = xml.GetElementsByTagName("wind_mph")[0].InnerText;
                 cnt++;
+
+                //https://stackify.com/nullreferenceexception-object-reference-not-set/
             }
 
             xlSheet.get_Range(
@@ -242,37 +272,46 @@ namespace HawaiiWeatherApp
 
         private void getRecommendation()
         {
-            if (double.Parse(label8.Text.Substring(0, 2)) > 35 || double.Parse(label10.Text) > 40 || double.Parse(label8.Text.Substring(0, 2)) < 0)
+            if (double.Parse(tempLabel.Text.Substring(0, 2)) > 35 || double.Parse(windLabel.Text) > 40 || double.Parse(tempLabel.Text.Substring(0, 2)) < 0)
             {
-                label9.Text = Outdoors.Not_recommended.ToString();
+                outdoorsLabel.Text = Outdoors.Not_recommended.ToString();
             }
             else
             {
-                label9.Text = Outdoors.Recommended.ToString();
+                outdoorsLabel.Text = Outdoors.Recommended.ToString();
             }
         }
         
 
-        private void button1_Click(object sender, EventArgs e)
+        private void updateButton_Click(object sender, EventArgs e)
         {
             updateData();
            
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void weatherButton_Click(object sender, EventArgs e)
         {
-            getWeatherData();
-            getRecommendation();
+            if (locationTextBox1.validateLocation(locationTextBox1.Text))
+            {
+                getWeatherData();
+                getRecommendation();
+            }
+            else
+            {
+                MessageBox.Show("Invalid location!");
+            }
+            
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void excelButton_Click(object sender, EventArgs e)
         {
             CreateExcel();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void exitButton_Click(object sender, EventArgs e)
         {
-
+          
+            Application.Exit();
         }
     }
 }
