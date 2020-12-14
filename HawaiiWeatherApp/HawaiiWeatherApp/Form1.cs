@@ -92,7 +92,7 @@ namespace HawaiiWeatherApp
             string obsTimeTmp = xml.GetElementsByTagName("observation_time")[0]?.InnerText;
             obsTimeLabel.Text = obsTimeTmp.Substring(obsTimeTmp.Length - 25, 25);
             weatherLabel.Text = xml.GetElementsByTagName("weather")[0]?.InnerText;
-            tempLabel.Text = xml.GetElementsByTagName("temp_c")[0]?.InnerText + "°C";
+            tempLabel.Text = xml.GetElementsByTagName("temp_c")[0]?.InnerText + " °C";
             windLabel.Text = xml.GetElementsByTagName("wind_mph")[0]?.InnerText;
             humidityLabel.Text = xml.GetElementsByTagName("relative_humidity")[0]?.InnerText + "%";
             //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
@@ -124,7 +124,7 @@ namespace HawaiiWeatherApp
         }
         private void getRecommendation()
         {
-            if (double.Parse(tempLabel.Text.Substring(0, 2)) > 35 || double.Parse(windLabel.Text) > 40 || double.Parse(tempLabel.Text.Substring(0, 2)) < 0)
+            if (double.Parse(tempLabel.Text.Substring(0, 2).Replace(" ", "")) > 35 || double.Parse(windLabel.Text) > 40 || double.Parse(tempLabel.Text.Substring(0, 2).Replace(" ", "")) < 0)
             {
                 outdoorsLabel.Text = Outdoors.Not_recommended.ToString();
             }
