@@ -34,6 +34,15 @@ namespace HawaiiWeatherApp
             updateData();
             setTexts();
             textBoxAutoComplete();
+            setDecimalSeparator();
+        }
+
+        private void setDecimalSeparator()
+        {
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        //https://stackoverflow.com/questions/45077006/changing-the-decimal-separator-in-visual-studio-2017?fbclid=IwAR2kce3X9xHMkC3Y59ElgCvVlNnO1iDF9QaTuct8D--p90c2gDDXie9Vg3A
         }
 
         private void checkDir()
