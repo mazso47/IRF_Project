@@ -29,12 +29,12 @@ namespace HawaiiWeatherApp
         public Form1()
         {
             InitializeComponent();
+            setDecimalSeparator();
             checkDir();
             fillLists();
             updateData();
             setTexts();
             textBoxAutoComplete();
-            setDecimalSeparator();
         }
 
         private void setDecimalSeparator()
@@ -76,28 +76,7 @@ namespace HawaiiWeatherApp
             );
         }
 
-        private void getWeatherData()
-        {
-
-            XmlDocument xml = new XmlDocument();
-            string selected = "";
-            for (int i = 0; i < links.Count; i++)
-            {
-                if (links[i].Location == locationTextBox1.Text)
-                {
-                    selected = links[i].fileName;
-                }
-            }
-            xml.Load("xmlFiles\\" + selected);
-            string obsTimeTmp = xml.GetElementsByTagName("observation_time")[0]?.InnerText;
-            obsTimeLabel.Text = obsTimeTmp.Substring(obsTimeTmp.Length - 25, 25);
-            weatherLabel.Text = xml.GetElementsByTagName("weather")[0]?.InnerText;
-            tempLabel.Text = xml.GetElementsByTagName("temp_c")[0]?.InnerText + " °C";
-            windLabel.Text = xml.GetElementsByTagName("wind_mph")[0]?.InnerText;
-            humidityLabel.Text = xml.GetElementsByTagName("relative_humidity")[0]?.InnerText + "%";
-            //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
-        }
-
+    
 
         private void updateData()
         {
@@ -122,6 +101,44 @@ namespace HawaiiWeatherApp
             }
            
         }
+
+        private void clearFiles()
+        {
+            DirectoryInfo di = new DirectoryInfo(Application.StartupPath.ToString() + "\\xmlFiles");
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+        }
+
+        private void clearLinks()
+        {
+            links.Clear();
+        }
+
+        private void getWeatherData()
+        {
+
+            XmlDocument xml = new XmlDocument();
+            string selected = "";
+            for (int i = 0; i < links.Count; i++)
+            {
+                if (links[i].Location == locationTextBox1.Text)
+                {
+                    selected = links[i].fileName;
+                }
+            }
+            xml.Load("xmlFiles\\" + selected);
+            string obsTimeTmp = xml.GetElementsByTagName("observation_time")[0]?.InnerText;
+            obsTimeLabel.Text = obsTimeTmp.Substring(obsTimeTmp.Length - 25, 25);
+            weatherLabel.Text = xml.GetElementsByTagName("weather")[0]?.InnerText;
+            tempLabel.Text = xml.GetElementsByTagName("temp_c")[0]?.InnerText + " °C";
+            windLabel.Text = xml.GetElementsByTagName("wind_mph")[0]?.InnerText;
+            humidityLabel.Text = xml.GetElementsByTagName("relative_humidity")[0]?.InnerText + "%";
+            //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
+        }
+
         private void getRecommendation()
         {
             if (double.Parse(tempLabel.Text.Substring(0, 2).Replace(" ", "")) > 35 || double.Parse(windLabel.Text) > 40 || double.Parse(tempLabel.Text.Substring(0, 2).Replace(" ", "")) < 0)
@@ -133,8 +150,6 @@ namespace HawaiiWeatherApp
                 outdoorsLabel.Text = Outdoors.Recommended.ToString();
             }
         }
-
-        
 
         private void CreateExcel()
         {
@@ -161,7 +176,6 @@ namespace HawaiiWeatherApp
             }
         }
 
-      
         private void CreateTable()
         {
             string[] headers = new string[]
@@ -251,21 +265,6 @@ namespace HawaiiWeatherApp
             ExcelCoordinate += x.ToString();
 
             return ExcelCoordinate;
-        }
-
-        private void clearFiles()
-        {
-            DirectoryInfo di = new DirectoryInfo(Application.StartupPath.ToString() + "\\xmlFiles");
-
-            foreach (FileInfo file in di.GetFiles())
-            {
-                file.Delete();
-            }
-        }
-
-        private void clearLinks()
-        {
-            links.Clear();
         }
 
         private void setTexts()
