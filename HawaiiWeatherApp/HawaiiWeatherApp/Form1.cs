@@ -42,7 +42,6 @@ namespace HawaiiWeatherApp
             System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
-        //https://stackoverflow.com/questions/45077006/changing-the-decimal-separator-in-visual-studio-2017?fbclid=IwAR2kce3X9xHMkC3Y59ElgCvVlNnO1iDF9QaTuct8D--p90c2gDDXie9Vg3A
         }
 
         private void checkDir()
@@ -53,7 +52,7 @@ namespace HawaiiWeatherApp
             }
             else
             {
-                DirectoryInfo di = Directory.CreateDirectory(Application.StartupPath.ToString() + "\\xmlFiles");
+               Directory.CreateDirectory(Application.StartupPath.ToString() + "\\xmlFiles");
             }
         }
      
@@ -75,8 +74,6 @@ namespace HawaiiWeatherApp
                 }
             );
         }
-
-    
 
         private void updateData()
         {
@@ -136,7 +133,6 @@ namespace HawaiiWeatherApp
             tempLabel.Text = xml.GetElementsByTagName("temp_c")[0]?.InnerText + " °C";
             windLabel.Text = xml.GetElementsByTagName("wind_mph")[0]?.InnerText;
             humidityLabel.Text = xml.GetElementsByTagName("relative_humidity")[0]?.InnerText + "%";
-            //https://stackoverflow.com/questions/897466/filter-list-object-without-using-foreach-loop-in-c2-0
         }
 
         private void getRecommendation()
@@ -216,8 +212,6 @@ namespace HawaiiWeatherApp
                 values[cnt, 5] = hum;
 
                 cnt++;
-
-                //https://stackify.com/nullreferenceexception-object-reference-not-set/
             }
 
             xlSheet.get_Range(
